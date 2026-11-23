@@ -35,8 +35,6 @@ def test_inventario_productos_visibles(driver):
     print("Precio:", precio_primer_producto)
 
 
-
-
 def test_inventario_validar_UI (driver):
     login(driver)  
 
@@ -45,3 +43,32 @@ def test_inventario_validar_UI (driver):
 
     filtros = driver.find_element(By.CLASS_NAME, "product_sort_container")
     assert filtros.is_displayed(), "Error! El filtro de productos no es visible."
+
+
+def test_inventario_ordenar_precio(driver):
+    login(driver)  
+
+    filtros = driver.find_element(
+        By.CLASS_NAME, "product_sort_container" 
+    )
+
+    filtros.find_element(
+        By.CSS_SELECTOR, "option[value='lohi']"
+    ).click()
+
+    elementos_precios = driver.find_elements (
+        By.CLASS_NAME, "inventory_item_price"
+    )
+
+    precios =[]
+
+    for elemento in elementos_precios:
+        precio = elemento.text.replace("$", "")
+        precios.append(float(precio))
+
+    assert len(precios) > 0, \
+        "Error: No se encontraron precios de productos."
+
+    for i in range(len(precios) - 1):
+        assert precios[i] <= precios[i + 1], \
+            f"Error: Los precios no están ordenados correctamente. Precio {precios[i]} es mayor que {precios[i + 1]}."
