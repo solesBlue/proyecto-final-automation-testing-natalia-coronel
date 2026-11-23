@@ -1,0 +1,17 @@
+[
+  {
+    "usuario": "standard_user",
+    "clave": "secret_sauce",
+    "debe_funcionar": true
+  },
+  {
+    "usuario": "locked_out_user",
+    "clave": "secret_sauce",
+    "debe_funcionar": false
+  },
+  {
+    "usuario": "usuario_invalido",
+    "clave": "password_invalida",
+    "debe_funcionar": false
+  }
+]
