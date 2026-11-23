@@ -55,9 +55,18 @@ def test_checkout_campos_obligatorios(driver):
         EC.element_to_be_clickable((By.ID, "checkout"))
     )
 
+    # boton_checkout.click()
+    # driver.find_element(By.ID, "continue").click()
+
     boton_checkout.click()
 
-    driver.find_element(By.ID, "continue").click()
+    # Esperar a que se visualice el formulario de checkout
+    boton_continuar = wait.until(
+        EC.element_to_be_clickable((By.ID, "continue"))
+    )
+
+    # Intenta continuar sin completar los campos
+    boton_continuar.click()
 
     wait = WebDriverWait(driver, 10)
     mensaje_error = wait.until(
