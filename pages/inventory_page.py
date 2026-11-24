@@ -14,7 +14,8 @@ class InventoryPage:
     _PRODUCT_NAMES = (By.CLASS_NAME, "inventory_item_name")
     _PRODUCT_PRICES = (By.CLASS_NAME, "inventory_item_price") 
     _MENU_BUTTON = (By.ID, "react-burger-menu-btn")
-    _SORT_FILTER = (By.CLASS_NAME, "product_sort_container")      
+    _SORT_FILTER = (By.CLASS_NAME, "product_sort_container")  
+    _REMOVE_BUTTONS = (By.CLASS_NAME, "btn_inventory")    
 
     # 2. CONSTRUCTOR
     def __init__(self, driver):
@@ -41,13 +42,20 @@ class InventoryPage:
         primer_boton.click()
         return self
 
+    # def obtener_contador_carrito(self):
+    #     """Obtiene el numero de productos en el carrito."""
+    #     try:
+    #         badge = self.driver.find_element(*self._CART_BADGE)
+    #         return int(badge.text)
+    #     except:
+    #         return 0
+
     def obtener_contador_carrito(self):
-        """Obtiene el numero de productos en el carrito."""
-        try:
-            badge = self.driver.find_element(*self._CART_BADGE)
-            return int(badge.text)
-        except:
-            return 0
+        """Obtiene la cantidad de productos agregados al carrito."""
+        badge = self.wait.until(
+            EC.visibility_of_element_located(self._CART_BADGE)
+        )
+        return int(badge.text)
 
     def obtener_nombres_productos(self):
         """Obtiene los nombres de los productos."""
@@ -79,7 +87,25 @@ class InventoryPage:
         )
 
         filtros.find_element(
-            By.CSS_SELECTOR, "option[value='lohi']"
+            By.CSS_SELECTOR, "option[value='lohi']"   #lohi	Abreviatura de low to high (menor a mayor).
         ).click()
 
         return self
+
+    def obtener_texto_primer_boton(self):
+        """Obtiene el texto del primer boton de producto."""
+        self.wait.until(
+            EC.text_to_be_present_in_element(
+                (By.CLASS_NAME, "btn_inventory"),
+                "Remove"
+            )
+        )
+
+        return self.driver.find_elements(*self._REMOVE_BUTTONS)[0].text
+
+    def ir_al_carrito(self):
+        """Navega a la pagina del carrito."""
+        self.driver.find_element(*self._CART_LINK).click()
+
+        from pages.cart_page import CartPage
+        return CartPage(self.driver)
