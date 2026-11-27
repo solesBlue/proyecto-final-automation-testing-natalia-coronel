@@ -1,0 +1,18 @@
+
+[
+    {
+        "nombre": "Natalia",
+        "apellido": "Coronel",
+        "codigo_postal": "1001"
+    },
+    {
+        "nombre": "Juan",
+        "apellido": "Perez",
+        "codigo_postal": "2095"
+    },
+    {
+        "nombre": "Maria",
+        "apellido": "Gonzalez",
+        "codigo_postal": "1406"
+    }
+]

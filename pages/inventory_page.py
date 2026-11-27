@@ -66,11 +66,19 @@ class InventoryPage:
         return self.driver.find_elements(*self._PRODUCT_PRICES)
 
     #clase 9: Indica que esperamos que el método devuelva un valor booleano
+    # def esta_menu_visible(self) -> bool:
+    #     """Verifica si el boton de menu esta visible."""
+    #     return self.driver.find_element(
+    #         *self._MENU_BUTTON
+    #     ).is_displayed()
+
     def esta_menu_visible(self) -> bool:
         """Verifica si el boton de menu esta visible."""
-        return self.driver.find_element(
-            *self._MENU_BUTTON
-        ).is_displayed()
+
+        boton_menu = self.wait.until(
+            EC.visibility_of_element_located(self._MENU_BUTTON)
+        )
+        return boton_menu.is_displayed()
 
     def esta_filtro_visible(self) -> bool:
         """Verifica si el filtro de ordenamiento esta visible."""

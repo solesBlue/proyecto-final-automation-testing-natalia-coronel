@@ -44,10 +44,23 @@ class CartPage:
         from pages.inventory_page import InventoryPage
         return InventoryPage(self.driver)
 
+    # def proceder_checkout(self):
+    #     """Inicia el proceso de checkout."""
+    #     self.driver.find_element(*self._CHECKOUT_BUTTON).click()
+    #     return self
+
+
     def proceder_checkout(self):
         """Inicia el proceso de checkout."""
-        self.driver.find_element(*self._CHECKOUT_BUTTON).click()
-        return self
+
+        boton_checkout = self.wait.until(
+            EC.element_to_be_clickable(self._CHECKOUT_BUTTON)
+        )
+
+        boton_checkout.click()
+
+        from pages.checkout_page import CheckoutPage
+        return CheckoutPage(self.driver)
 
     #Se crea un objeto CartPage después de navegar al carrito.
     def ir_al_carrito(self):
